@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             .baseUrl(BASE_URL_NAVER_API)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
         val api = retrofit.create(NaverAPI::class.java)
         val callGetSearchNews = api.getSearchNews(Client_ID, Client_Secret, "테스트")
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<ResultTransferPapago>, t: Throwable) {
-
+                    Log.d("번역", "실패 : $t")
                 }
             })
         }
@@ -60,12 +61,12 @@ class MainActivity : AppCompatActivity() {
                 response: Response<ResultGetSearchNews>) {
                 var result = response.body()
                 var itemResult = result!!.items
-                newsTitle.text = itemResult[0].title
-                newsDescription.text = itemResult[0].description
+                newsTitle.text = itemResult[1].title
+                newsDescription.text = itemResult[1].description
             }
 
             override fun onFailure(call: Call<ResultGetSearchNews>, t: Throwable) {
-
+                Log.d("뉴스검색", "실패 : $t")
             }
         })
 
